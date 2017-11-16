@@ -4,15 +4,13 @@ import Queue from "../lib/queue/Queue";
 
 describe("Queue", () => {
   let queue;
-  let finishCallback, errorCallback;
 
   beforeEach(() => {
-    queue = new Queue(1);
-    finishCallback = jasmine.createSpy("finishCallback");
-    errorCallback = jasmine.createSpy("errorCallback");
+    queue = new Queue();
   });
 
-  it("takes a function and executes it", () => {
+
+  it("takes a function and executes it", (done) => {
     let actionCalled = false;
 
     const func = () => {
@@ -22,29 +20,24 @@ describe("Queue", () => {
     };
 
     queue.addAction(func);
-    queue.execute(finishCallback, errorCallback);
 
-    expect(actionCalled).toBeTruthy();
+    queue.execute().then(() => {
+      expect(actionCalled).toBeTruthy();
+    })
+      .then(done, done);
   });
 
-  it("calls the finish callback when done", () => {
-    const action = () => Promise.resolve();
+  it("rejects when the action fails", (done) => {
+    const action = () => Promise.reject("the error");
 
     queue.addAction(action);
-    queue.execute(finishCallback, errorCallback);
-
-    expect(finishCallback).toHaveBeenCalled();
-  });
-
-  it("calls the error callback when action fails", () => {
-    const failingAction = () => Promise.reject("nope");
-
-    runs(() => {
-      queue.addAction(failingAction);
-      queue.execute(finishCallback, errorCallback);
-    });
-
-    waitsFor(() => errorCallback.callCount > 0);
+    queue.execute().then(() => {
+      fail("promise should have been rejected");
+    })
+      .catch((e) => {
+        expect(e).toEqual("the error");
+      })
+      .then(done, done);
   });
 });
 
