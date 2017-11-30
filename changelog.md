@@ -7,6 +7,7 @@
 
 ### Changed
 * Menu entries are added under "SFTP Sync" now
+* We use native Promises now (instead of Bluebird)
 
 
 ## [2.0.1] - 2017-10-07

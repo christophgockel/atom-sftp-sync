@@ -35,7 +35,6 @@
     "MD5": "^1.2.1",
     "util": "*",
     "node-dir": "*",
-    "bluebird": "^2.9.16",
     "expand-home-dir": "^0.0.2",
     "atom-space-pen-views": "^2.0.3"
   },
