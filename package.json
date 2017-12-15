@@ -30,13 +30,14 @@
     "lint": "eslint lib"
   },
   "dependencies": {
-    "ssh2": "^0.4.4",
-    "ftp": "^0.3.9",
     "MD5": "^1.2.1",
-    "util": "*",
-    "node-dir": "*",
+    "atom-space-pen-views": "^2.0.3",
+    "es6-promise-pool": "^2.5.0",
     "expand-home-dir": "^0.0.2",
-    "atom-space-pen-views": "^2.0.3"
+    "ftp": "^0.3.9",
+    "node-dir": "*",
+    "ssh2": "^0.4.4",
+    "util": "*"
   },
   "devDependencies": {
     "eslint": "^4.7.2"

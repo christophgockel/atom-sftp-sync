@@ -9,6 +9,9 @@
 * Menu entries are added under "SFTP Sync" now
 * We use native Promises now (instead of Bluebird)
 
+### Fixed
+* Error when trying to sync large directories
+
 
 ## [2.0.1] - 2017-10-07
 
