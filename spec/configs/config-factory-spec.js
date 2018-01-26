@@ -43,5 +43,16 @@ describe("ConfigFactory", () => {
     })
       .then(done, done);
   });
+
+  it("rejects when no config file could be found", () => {
+    const errorThatShouldNotHappen = new Error("should have been rejected");
+
+    factory.loadConfig("non-existant-file").then(() => {
+      throw errorThatShouldNotHappen;
+    })
+      .catch((e) => {
+        expect(e).not.toBe(errorThatShouldNotHappen);
+      });
+  });
 });
 
