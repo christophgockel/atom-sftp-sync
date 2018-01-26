@@ -6,6 +6,8 @@ import ConfigFactory from "../../lib/configs/ConfigFactory";
 import ConfigurationFileSyntaxErrorException from "../../lib/exceptions/ConfigurationFileSyntaxErrorException";
 
 describe("ConfigFactory", () => {
+  const toBeRejected = {shouldReject: true};
+
   let factory;
 
   beforeEach(() => {
@@ -39,25 +41,19 @@ describe("ConfigFactory", () => {
   it("rejects invalid config files", () => {
     const invalidContent = "invalid-json";
 
-    factory.parseConfigFile(invalidContent)
-      .then(() => {
-        throw new Error("should have been rejected");
-      })
+    waitsForPromise(toBeRejected, () => factory.parseConfigFile(invalidContent)
       .catch((error) => {
         expect(error instanceof ConfigurationFileSyntaxErrorException).toBeTruthy();
-      });
+        throw error;
+      }));
   });
 
   it("rejects when no config file could be found", () => {
-    const errorThatShouldNotHappen = new Error("should have been rejected");
-
-    factory.loadConfig("non-existant-file")
-      .then(() => {
-        throw errorThatShouldNotHappen;
-      })
-      .catch((e) => {
-        expect(e).not.toBe(errorThatShouldNotHappen);
-      });
+    waitsForPromise(toBeRejected, () => factory.loadConfig("non-existant-file")
+      .catch((error) => {
+        expect(error.message).toContain("doesn't exist");
+        throw error;
+      }));
   });
 });
 
