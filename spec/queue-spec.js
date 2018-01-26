@@ -1,8 +1,11 @@
 "use babel";
 
+/* global waitsForPromise */
+
 import Queue from "../lib/queue/Queue";
 
 describe("Queue", () => {
+  const toBeRejected = {shouldReject: true};
   let queue;
 
   beforeEach(() => {
@@ -10,7 +13,7 @@ describe("Queue", () => {
   });
 
 
-  it("takes a function and executes it", (done) => {
+  it("takes a function and executes it", () => {
     let actionCalled = false;
 
     const func = () => {
@@ -21,23 +24,20 @@ describe("Queue", () => {
 
     queue.addAction(func);
 
-    queue.execute().then(() => {
+    waitsForPromise(() => queue.execute().then(() => {
       expect(actionCalled).toBeTruthy();
-    })
-      .then(done, done);
+    }));
   });
 
-  it("rejects when the action fails", (done) => {
+  it("rejects when the action fails", () => {
     const action = () => Promise.reject("the error");
 
     queue.addAction(action);
-    queue.execute().then(() => {
-      fail("promise should have been rejected");
-    })
-      .catch((e) => {
-        expect(e).toEqual("the error");
-      })
-      .then(done, done);
+
+    waitsForPromise(toBeRejected, () => queue.execute().catch((error) => {
+      expect(error).toEqual("the error");
+      throw error;
+    }));
   });
 });
 
