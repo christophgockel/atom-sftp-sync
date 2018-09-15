@@ -3,7 +3,6 @@
 /* global waitsForPromise */
 
 import ConfigFactory from "../../lib/configs/ConfigFactory";
-import ConfigurationFileSyntaxErrorException from "../../lib/exceptions/ConfigurationFileSyntaxErrorException";
 
 describe("ConfigFactory", () => {
   const toBeRejected = {shouldReject: true};
@@ -43,7 +42,7 @@ describe("ConfigFactory", () => {
 
     waitsForPromise(toBeRejected, () => factory.parseConfigFile(invalidContent)
       .catch((error) => {
-        expect(error instanceof ConfigurationFileSyntaxErrorException).toBeTruthy();
+        expect(error.message).toContain("Invalid configuration file")
         throw error;
       }));
   });
@@ -56,4 +55,3 @@ describe("ConfigFactory", () => {
       }));
   });
 });
-
