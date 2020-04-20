@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+* Plugin keeps quiet when a project doesn't contain a config file.
+
+
 ## [2.1.0] - 2017-12-15
 
 ### Added
