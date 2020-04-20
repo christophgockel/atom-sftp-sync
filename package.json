@@ -6,6 +6,11 @@
     "name": "Christoph Gockel",
     "email": "cgockel@8thlight.com"
   },
+  "contributors": [
+    {
+      "name": "Ellipsis Team"
+    }
+  ],
   "repository": "https://github.com/christophgockel/atom-sftp-sync",
   "bugs": {
     "url": "https://github.com/christophgockel/atom-sftp-sync/issues"
