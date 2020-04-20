@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+* File path handling of different operating systems between the local and remote system.
+
+
 ## [2.1.0] - 2017-12-15
 
 ### Added
