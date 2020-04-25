@@ -1,5 +1,7 @@
 "use babel";
 
+/* global waitsForPromise */
+
 import ConnectionFactory from "../lib/connections/ConnectionFactory";
 import SftpConnection from "../lib/connections/SftpConnection";
 import FtpConnection from "../lib/connections/FtpConnection";
@@ -14,22 +16,20 @@ describe("ConnectionFactory", () => {
     config = new Config();
   });
 
-  it("creates an SFTP connection", (done) => {
+  it("creates an SFTP connection", () => {
     config.port = 22;
 
-    factory.createConnection(config).then((connection) => {
+    waitsForPromise(() => factory.createConnection(config).then((connection) => {
       expect(connection instanceof SftpConnection).toBeTruthy();
-    }).
-      then(done, done);
+    }));
   });
 
-  it("creates an FTP connection", (done) => {
+  it("creates an FTP connection", () => {
     config.port = 21;
 
-    factory.createConnection(config).then((connection) => {
+    waitsForPromise(() => factory.createConnection(config).then((connection) => {
       expect(connection instanceof FtpConnection).toBeTruthy();
-    }).
-      then(done, done);
+    }));
   });
 });
 
